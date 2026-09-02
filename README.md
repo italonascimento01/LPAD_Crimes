@@ -4,6 +4,8 @@ Estudo exploratório da base de criminalidade do Departamento de Polícia de Los
 
 **Projeto Integrador III** — Ciência de Dados e Machine Learning, CEUB.
 
+**Integrantes:** Henrique Valle · Matheus Lopes · Italo Nascimento · Davi Amâncio
+
 O objetivo do projeto é realizar um estudo da base de dados, apresentando ao final do semestre uma página web com o relatório do que foi desenvolvido. As questões relacionadas ao pipeline de dados são tratadas de forma a garantir um processamento profissional.
 
 ## Perguntas de pesquisa

@@ -3,7 +3,7 @@
 **Projeto Integrador III — Ciência de Dados e Machine Learning**
 Centro Universitário de Brasília (CEUB)
 
-**Autores:** Henrique Valle Chaves; *(demais integrantes)*
+**Integrantes:** Henrique Valle; Matheus Lopes; Italo Nascimento; Davi Amâncio
 **Data:** setembro de 2026
 **Etapa:** entrega parcial — análise exploratória e primeiros experimentos de agrupamento
 
