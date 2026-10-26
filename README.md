@@ -36,7 +36,7 @@ LPAD_Crimes/
 ├── docs/
 │   ├── relatorios/       # entregas do projeto
 │   └── figuras/          # gráficos exportados
-├── notebooks/            # análises em Jupyter
+├── notebooks/            # cadeia de três notebooks (ver LEIA-ME.md)
 ├── src/                  # funções reutilizáveis
 ├── requirements.txt
 └── README.md
@@ -46,19 +46,32 @@ LPAD_Crimes/
 
 | Data | Documento | Etapa |
 |---|---|---|
+| 26/10/2026 | [Relatório Técnico — Segunda Entrega](docs/relatorios/2026-10-26_relatorio-segunda-entrega.pdf) | Reestruturação do pipeline e validação formal do agrupamento |
 | 02/09/2026 | [Relatório Técnico Parcial](docs/relatorios/2026-09-02_relatorio-parcial.pdf) | Exploração, qualidade e primeiros experimentos de agrupamento |
+
+## Notebooks
+
+A análise está organizada em três notebooks encadeados, com contratos explícitos entre etapas. Devem ser executados na ordem, a partir da mesma pasta de trabalho — ver [`notebooks/LEIA-ME.md`](notebooks/LEIA-ME.md).
+
+```
+01_limpeza.ipynb        → data/processed/lapd_clean.csv
+02_clusterizacao.ipynb  → data/processed/amostra_clusters.csv
+03_visualizacoes.ipynb  → docs/figuras/*.png
+```
 
 ## Estado atual
 
-Concluídas a caracterização da base, a análise de qualidade e dois experimentos de agrupamento com K-Modes.
+Pipeline reconstruído em três notebooks. As cinco falhas apontadas no relatório parcial (E1 a E5) foram corrigidas, e a cadeia foi executada de ponta a ponta com as saídas preservadas.
 
 Principais achados até o momento:
 
-- **Quebra estrutural em março de 2024.** O volume mensal cai de ~19.000 para ~8.000 registros em decorrência da migração do LAPD para sistema alinhado ao NIBRS. Não representa redução de criminalidade. Análises longitudinais devem ser truncadas em 29/02/2024.
-- **Os experimentos de K-Modes não produziram os perfis pretendidos.** O diagnóstico por informação mútua mostrou que as partições refletiam variáveis demográficas da vítima, e não perfil criminal. A curva de custo não apresenta ponto de inflexão.
-- **Resultados preliminares por métodos alternativos** (V de Cramér e análise de coocorrência) já respondem parcialmente a PP1 e PP2, em ambos os casos contrariando as hipóteses iniciais.
+- **Quebra estrutural em março de 2024.** O volume mensal cai de ~19.000 para ~8.000 registros em decorrência da migração do LAPD para sistema alinhado ao NIBRS. Não representa redução de criminalidade. A base é truncada em 29/02/2024, restando 913.647 registros (90,9% do total).
+- **Não há estrutura de agrupamento nos atributos do fato criminal.** O modelo nulo por permutação mostra que 87,5% da redução de custo obtida pelo K-Modes é reproduzida por dados embaralhados. A silhueta fica em 0,080 e nenhum valor de k atinge o limiar de estabilidade.
+- **A partição obtida não é reproduzível.** Variando apenas a semente aleatória, o ARI médio entre execuções é de 0,226, com custo praticamente equivalente.
+- **O agrupamento de modus operandi é o resultado mais promissor.** `Mocodes` tratado como texto (TF-IDF → SVD → K-Means) atinge silhueta de 0,40 e produz grupos coerentes.
+- **O sinal mais forte da base está na taxa de prisão por tipo de crime**, que varia de 0,0% a 36,2% — amplitude que a partição não captura.
 
-O relatório parcial documenta cinco falhas metodológicas identificadas (E1 a E5) e o respectivo plano de correção.
+A segunda entrega documenta seis novas falhas (E6 a E11), uma delas já resolvida, e o plano de correção correspondente.
 
 ## Reprodução
 
